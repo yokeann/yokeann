@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KEAN</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header>
+        <button class="header-button" onclick="location.href='index.html';">
+          KEAN
+        </button>
+        <hr />
+<!--Music Section-->
+
+<audio id="audioPlayer" controls>
+  Your browser does not support the audio element.
+</audio>
+
+<ul id="playlist">
+  <li data-src="song1.mp3">Song 1</li>
+  <li data-src="song2.mp3">Song 2</li>
+  <li data-src="song3.mp3">Song 3</li>
+</ul>
+
+<script>
+  const audioPlayer = document.getElementById('audioPlayer');
+  const playlistItems = document.querySelectorAll('#playlist li');
+  let currentTrack = 0;
+
+  function loadTrack(index) {
+      const src = playlistItems[index].getAttribute('data-src');
+      audioPlayer.src = src;
+      audioPlayer.play();
+    }
+
+     // Load the first track on page load
+     loadTrack(currentTrack);
+
+// Click to play any song
+playlistItems.forEach((item, index) => {
+  item.addEventListener('click', () => {
+    currentTrack = index;
+    loadTrack(currentTrack);
+  });
+});
+
+// Automatically play next song when current ends
+audioPlayer.addEventListener('ended', () => {
+  currentTrack = (currentTrack + 1) % playlistItems.length;
+  loadTrack(currentTrack);
+});
+
+
+</body>
+</html>
