@@ -14,44 +14,11 @@
         </button>
         <hr />
 <!--Music Section-->
+<iframe width="50%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1999350556&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/yokeann" title="kean" target="_blank" style="color: #cccccc; text-decoration: none;">kean</a> · <a href="https://soundcloud.com/yokeann/sets/the-lost-tapes-genesis-vol-1" title="the book of kean: genesis vol. 1 (demo)" target="_blank" style="color: #cccccc; text-decoration: none;">the book of kean: genesis vol. 1 (demo)</a></div>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1kHxEpV565BAIYzmnNJSgE?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
-<audio id="audioPlayer" controls>
-  Your browser does not support the audio element.
-</audio>
 
-<ul id="playlist">
-  <li data-src="song1.mp3">Song 1</li>
-  <li data-src="song2.mp3">Song 2</li>
-  <li data-src="song3.mp3">Song 3</li>
-</ul>
 
-<script>
-  const audioPlayer = document.getElementById('audioPlayer');
-  const playlistItems = document.querySelectorAll('#playlist li');
-  let currentTrack = 0;
-
-  function loadTrack(index) {
-      const src = playlistItems[index].getAttribute('data-src');
-      audioPlayer.src = src;
-      audioPlayer.play();
-    }
-
-     // Load the first track on page load
-     loadTrack(currentTrack);
-
-// Click to play any song
-playlistItems.forEach((item, index) => {
-  item.addEventListener('click', () => {
-    currentTrack = index;
-    loadTrack(currentTrack);
-  });
-});
-
-// Automatically play next song when current ends
-audioPlayer.addEventListener('ended', () => {
-  currentTrack = (currentTrack + 1) % playlistItems.length;
-  loadTrack(currentTrack);
-});
 
 
 </body>
