@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KEAN — Inner Circle (Mockup)</title>
+    <style>
+      :root {
+        --bg: #040404;
+        --panel: #0b0b0b;
+        --accent: #ffffff; /* pure white accent */
+        --muted: #999;
+        --glass: rgba(255, 255, 255, 0.03);
+        --radius: 14px;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--accent);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      /* grain overlay */
+      .grain:after {
+        content: "";
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.02) 0.5px,
+          transparent 0.6px
+        );
+        opacity: 0.25;
+        mix-blend-mode: overlay;
+      }
+
+      .card {
+        width: 980px;
+        max-width: 96vw;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .brand {
+        font-weight: 700;
+        letter-spacing: 6px;
+        font-size: 18px;
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .cols {
+        display: flex;
+        gap: 28px;
+      }
+      .left {
+        flex: 0 0 420px;
+      }
+      .right {
+        flex: 1;
+      }
+
+      /* gate */
+      .gate {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.75)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 40;
+        padding: 28px;
+        backdrop-filter: blur(2px);
+      }
+      .gate .panel {
+        background: var(--panel);
+        padding: 34px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 520px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .gate h1 {
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .gate p {
+        margin: 0 0 18px;
+        color: var(--muted);
+      }
+      .gate input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: transparent;
+        color: var(--accent);
+        outline: none;
+      }
+      .gate button {
+        margin-top: 12px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: transparent;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        width: 100%;
+        cursor: pointer;
+      }
+
+      /* player card */
+      .player {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .player h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+      }
+      audio {
+        width: 100%;
+        appearance: none;
+        outline: none;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 8px;
+      }
+
+      /* request form */
+      .request {
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 10px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          rgba(255, 255, 255, 0.005)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .request input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        background: transparent;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .request button {
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--accent);
+        background: transparent;
+        color: var(--accent);
+        cursor: pointer;
+      }
+
+      /* countdown */
+      .countdown {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .countdown .box {
+        background: var(--glass);
+        padding: 12px 16px;
+        border-radius: 10px;
+        text-align: center;
+        min-width: 64px;
+      }
+      .countdown .num {
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .countdown .lbl {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      /* discord button */
+      .discord {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        text-decoration: none;
+        color: var(--accent);
+      }
+
+      /* subtle flicker */
+      .flicker {
+        animation: flicker 3.5s infinite;
+      }
+      @keyframes flicker {
+        0% {
+          opacity: 1;
+        }
+        4% {
+          opacity: 0.96;
+        }
+        6% {
+          opacity: 0.98;
+        }
+        7% {
+          opacity: 0.94;
+        }
+        8% {
+          opacity: 1;
+        }
+        70% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* small screens */
+      @media (max-width: 780px) {
+        .cols {
+          flex-direction: column;
+        }
+        .left {
+          flex: auto;
+        }
+      }
+    </style>
+  </head>
+  <body class="grain">
+    <div class="card">
+      <header>
+        <div class="brand flicker">KEAN</div>
+        <div class="hint">Inner Circle • invite only</div>
+      </header>
+
+      <div class="cols" id="mainContent" aria-hidden="true">
+        <div class="left">
+          <div class="player">
+            <h2>Unreleased — Demo 001</h2>
+            <!-- Replace src with your private file or a SoundCloud private URL -->
+            <audio controls preload="metadata">
+              <source src="demo-track.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+            <div class="meta">Only for members. Do not distribute.</div>
+
+            <div class="request">
+              <strong>Request Access</strong>
+              <p
+                style="color: var(--muted); font-size: 13px; margin: 8px 0 12px"
+              >
+                Ask for an invite — we’ll review requests manually.
+              </p>
+              <input id="reqName" placeholder="Your name" />
+              <input id="reqEmail" placeholder="Email address" />
+              <button id="reqBtn">Request Invite</button>
+              <div
+                id="reqStatus"
+                style="margin-top: 10px; color: var(--muted); font-size: 13px"
+              ></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 18px; color: var(--muted); font-size: 13px">
+            Tip: each accepted member receives one invite code to bring a
+            friend.
+          </div>
+        </div>
+
+        <aside class="right">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start;
+            "
+          >
+            <div>
+              <div style="font-size: 13px; color: var(--muted)">Next drop</div>
+              <div class="countdown" style="margin-top: 8px">
+                <div class="box">
+                  <div class="num" id="cdDays">00</div>
+                  <div class="lbl">DAYS</div>
+                </div>
+                <div class="box">
+                  <div class="num" id="cdHours">00</div>
+                  <div class="lbl">HRS</div>
+                </div>
+                <div class="box">
+                  <div class="num" id="cdMins">00</div>
+                  <div class="lbl">MINS</div>
+                </div>
+                <div class="box">
+                  <div class="num" id="cdSecs">00</div>
+                  <div class="lbl">SECS</div>
+                </div>
+              </div>
+
+              <div
+                style="margin-top: 18px; color: var(--muted); font-size: 13px"
+              >
+                Exclusive listening party and AMA in the Discord when the clock
+                hits zero.
+              </div>
+            </div>
+
+            <div style="text-align: right">
+              <div style="font-size: 12px; color: var(--muted)">
+                Member actions
+              </div>
+              <a id="discordLink" class="discord" target="_blank" rel="noopener"
+                >Enter The Room</a
+              >
+              <div
+                style="font-size: 12px; color: var(--muted); margin-top: 8px"
+              >
+                Invite-only — link visible after acceptance.
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="
+              margin-top: 22px;
+              padding: 16px;
+              border-radius: 12px;
+              background: var(--panel);
+              border: 1px solid rgba(255, 255, 255, 0.02);
+            "
+          >
+            <div style="font-size: 13px; color: var(--muted)">Latest notes</div>
+            <ul
+              style="
+                margin: 10px 0 0;
+                padding-left: 18px;
+                color: var(--muted);
+                font-size: 13px;
+              "
+            >
+              <li>Demo 001 — rough mix</li>
+              <li>Teaser visual posted 10/21</li>
+              <li>Listening party 10/31</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Gate overlay -->
+      <div class="gate" id="gate">
+        <div class="panel">
+          <h1>ENTER THE INNER CIRCLE</h1>
+          <p>
+            Access is restricted. Enter your invite code or request access
+            below.
+          </p>
+          <input id="codeInput" placeholder="Enter invite code" />
+          <button id="enterBtn">Enter</button>
+
+          <div style="margin-top: 12px; color: var(--muted); font-size: 13px">
+            No code?
+            <a
+              href="#request"
+              style="color: var(--accent); text-decoration: underline"
+              id="openRequest"
+              >Request an invite</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // -- CONFIG --
+      const VALID_CODES = ["innercircle", "inner2025", "kean-vip"]; // replace with your real codes
+      const NEXT_DROP = new Date("2025-10-31T20:00:00"); // set your drop date & time (ISO)
+      const DISCORD_URL = "https://discord.gg/yourserver";
+
+      // gate logic
+      const gate = document.getElementById("gate");
+      const main = document.getElementById("mainContent");
+      const codeInput = document.getElementById("codeInput");
+      const enterBtn = document.getElementById("enterBtn");
+      const discordLink = document.getElementById("discordLink");
+
+      function unlock() {
+        gate.style.display = "none";
+        main.setAttribute("aria-hidden", "false");
+        discordLink.href = DISCORD_URL;
+      }
+
+      enterBtn.addEventListener("click", () => {
+        const val = (codeInput.value || "").trim().toLowerCase();
+        if (VALID_CODES.includes(val)) {
+          localStorage.setItem("kean_unlocked", "1");
+          unlock();
+        } else {
+          alert("Invalid code. If you don't have one, request an invite.");
+        }
+      });
+
+      // persist unlock
+      if (localStorage.getItem("kean_unlocked")) unlock();
+
+      // request form
+      document.getElementById("reqBtn").addEventListener("click", () => {
+        const name = document.getElementById("reqName").value.trim();
+        const email = document.getElementById("reqEmail").value.trim();
+        const status = document.getElementById("reqStatus");
+        if (!name || !email) {
+          status.textContent = "Name and email required.";
+          return;
+        }
+        // simulate submit — replace with your API call to Mailchimp/ConvertKit
+        const requests = JSON.parse(
+          localStorage.getItem("kean_requests") || "[]"
+        );
+        requests.push({ name, email, time: new Date().toISOString() });
+        localStorage.setItem("kean_requests", JSON.stringify(requests));
+        status.textContent =
+          "Request submitted. We'll review and email you if accepted.";
+        document.getElementById("reqName").value = "";
+        document.getElementById("reqEmail").value = "";
+      });
+
+      // quick link to request area
+      document.getElementById("openRequest").addEventListener("click", (e) => {
+        e.preventDefault();
+        gate.style.display = "none";
+        main.setAttribute("aria-hidden", "false");
+        document.getElementById("reqName").focus();
+      });
+
+      // countdown
+      function updateCountdown() {
+        const now = new Date();
+        let diff = Math.max(0, NEXT_DROP - now);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        diff -= days * (1000 * 60 * 60 * 24);
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+        const mins = Math.floor(diff / (1000 * 60));
+        diff -= mins * (1000 * 60);
+        const secs = Math.floor(diff / 1000);
+        document.getElementById("cdDays").textContent = String(days).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("cdHours").textContent = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("cdMins").textContent = String(mins).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("cdSecs").textContent = String(secs).padStart(
+          2,
+          "0"
+        );
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
