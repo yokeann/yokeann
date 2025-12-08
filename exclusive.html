@@ -271,6 +271,32 @@
   </head>
   <body class="grain">
     <div class="card">
+      <a href="/index.html" class="back-btn">← Back</a>
+
+<style>
+.back-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  transition: 0.2s;
+  z-index: 9999;
+}
+.back-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+}
+</style>
+
+
       <header>
         <div class="brand flicker">KEAN</div>
         <div class="hint">Inner Circle • invite only</div>
@@ -505,4 +531,5 @@
       setInterval(updateCountdown, 1000);
     </script>
   </body>
+  
 </html>
